@@ -33,7 +33,7 @@ namespace Vorfol.Data {
         public byte[] data {
             get  {
                 byte[] retData = new byte[this.size];
-                if (this.valid) {
+                if (this.valid && this.size > 0) {
                     Array.Copy(this.baseData, this.start + sizeof(byte)*2, retData, 0, retData.Length);
                 }
                 return retData;
