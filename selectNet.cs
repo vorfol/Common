@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Vorfol.Common {
     public class SelectNetFromConsole {
-        public static async Task<IPAddress> start() {
+        public static async Task<UnicastIPAddressInformation> start() {
 
             string choice = "";
 
@@ -66,10 +65,10 @@ namespace Vorfol.Common {
 
             int cardIdx = int.Parse(choice) - 1;
 
-            foreach(var card_addr in netCards[cardIdx].GetIPProperties().UnicastAddresses) {
-                if (card_addr.Address.AddressFamily == AddressFamily.InterNetwork) {
+            foreach(var unicastAddrress in netCards[cardIdx].GetIPProperties().UnicastAddresses) {
+                if (unicastAddrress.Address.AddressFamily == AddressFamily.InterNetwork) {
                     // RETURN NOW
-                    return card_addr.Address;
+                    return unicastAddrress;
                 }
             }
 

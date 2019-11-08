@@ -58,4 +58,29 @@ namespace Vorfol.Data {
             }
         }
     }
+    public class BlockToSend {
+        private List<byte> sendData;
+        public BlockToSend() {
+            this.sendData = new List<byte>();
+        }
+        public void push(byte id, byte[] data) {
+            int size = data.Length;
+            int pos = 0;
+            while(size > 255) {
+                this.sendData.Add(id);
+                this.sendData.Add(255);
+                this.sendData.AddRange(new ArraySegment<byte>(data, pos, 255));
+                pos += 255;
+                size -= 255;
+            }
+            this.sendData.Add(id);
+            this.sendData.Add((byte)size);
+            this.sendData.AddRange(data);
+        }
+        public byte[] data {
+            get {
+                return this.sendData.ToArray();
+            }
+        }
+    }
 }
