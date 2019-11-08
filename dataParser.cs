@@ -57,6 +57,15 @@ namespace Vorfol.Data {
                 parsedValue = new ParsedValue(data, offset);
             }
         }
+        public bool lastValue(byte id, out ParsedValue value) {
+            List<ParsedValue> entries;
+            if (values.TryGetValue(id, out entries)) {
+                value = entries[entries.Count - 1];
+                return true;
+            }
+            value = null;
+            return false;
+        }
     }
     public class BlockToSend {
         private List<byte> sendData;

@@ -6,8 +6,13 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Vorfol.Common {
+    public class SelectedNet {
+        public UnicastIPAddressInformation ipInfo;
+        public PhysicalAddress mac;
+    }
+    
     public class SelectNetFromConsole {
-        public static async Task<UnicastIPAddressInformation> start() {
+        public static async Task<SelectedNet> start() {
 
             string choice = "";
 
@@ -68,7 +73,10 @@ namespace Vorfol.Common {
             foreach(var unicastAddrress in netCards[cardIdx].GetIPProperties().UnicastAddresses) {
                 if (unicastAddrress.Address.AddressFamily == AddressFamily.InterNetwork) {
                     // RETURN NOW
-                    return unicastAddrress;
+                    return new SelectedNet() {
+                        ipInfo = unicastAddrress,
+                        mac = netCards[cardIdx].GetPhysicalAddress()
+                    };
                 }
             }
 
