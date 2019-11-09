@@ -86,6 +86,11 @@ namespace Vorfol.Data {
             this.sendData.Add((byte)size);
             this.sendData.AddRange(data);
         }
+        public int count {
+            get {
+                return this.sendData.Count;
+            }
+        }
         public byte[] data {
             get {
                 return this.sendData.ToArray();
