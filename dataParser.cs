@@ -17,10 +17,12 @@ namespace Vorfol.Data {
                     this.start = start;
                     this.id = baseData[start];
                     if ((this.id & 0x80) != 0) {
+                        // acquiring data
                         this.id = (byte)(this.id ^ 0xFF);
                         this.offset = sizeof(byte);
                         this.valid = true;
                     } else {
+                        // sending data
                         this.size = baseData[start + sizeof(byte)];
                         this.offset = sizeof(byte)*2 + size;
                         if (this.start + this.offset <= this.baseData.Length) {
@@ -85,6 +87,9 @@ namespace Vorfol.Data {
             this.sendData.Add(id);
             this.sendData.Add((byte)size);
             this.sendData.AddRange(data);
+        }
+        public void acquire(byte id) {
+            this.sendData.Add((byte)(id ^ 0xFF));
         }
         public int count {
             get {
